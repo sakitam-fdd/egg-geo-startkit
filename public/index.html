@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+  <title>app</title>
+  <style type="text/css">
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+    }
+  </style>
+</head>
+<body>
+<noscript>
+  <strong>We're sorry but app doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+</noscript>
+<div id="app"></div>
+<!-- built files will be auto injected -->
+<script src="https://d3js.org/d3.v5.js"></script>
+<script src="https://d3js.org/d3-contour.v1.min.js"></script>
+<script>
+
+  // Populate a grid of n×m values where -2 ≤ x ≤ 2 and -2 ≤ y ≤ 1.
+  var n = 256, m = 256, values = new Array(n * m);
+  for (var j = 0.5, k = 0; j < m; ++j) {
+    for (var i = 0.5; i < n; ++i, ++k) {
+      values[k] = goldsteinPrice(i / n * 4 - 2, 1 - j / m * 3);
+    }
+  }
+
+  // Compute the contour polygons at log-spaced intervals; returns an array of MultiPolygon.
+  var contours = d3.contours()
+    .size([n, m])
+    .thresholds(d3.range(2, 21).map(p => Math.pow(2, p)))
+    (values);
+
+  console.log(contours);
+
+  // See https://en.wikipedia.org/wiki/Test_functions_for_optimization
+  function goldsteinPrice(x, y) {
+    return (1 + Math.pow(x + y + 1, 2) * (19 - 14 * x + 3 * x * x - 14 * y + 6 * x * x + 3 * y * y))
+      * (30 + Math.pow(2 * x - 3 * y, 2) * (18 - 32 * x + 12 * x * x + 48 * y - 36 * x * y + 27 * y * y));
+  }
+
+</script>
+</body>
+</html>

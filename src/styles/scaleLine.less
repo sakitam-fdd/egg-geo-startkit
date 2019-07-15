@@ -1,0 +1,64 @@
+.sf-ctrl-scale {
+  height: 10px;
+  background-color: transparent;
+  font-size: 12px;
+  text-align: center;
+  //border-width: medium 2px 2px;
+  //border-style: none solid solid;
+  //border-color: #ffffff;
+  padding: 0 5px;
+  color: #ffffff;
+  line-height: 0;
+  box-sizing: border-box;
+  transition: .3s;
+  will-change: contents, width;
+
+  .scale-text {
+    position: absolute;
+    top: -18px;
+    font-size: 12px;
+    font-weight: normal;
+    font-stretch: normal;
+    line-height: 16.5px;
+    letter-spacing: 1.3px;
+    white-space: nowrap;
+    left: 50%;
+    padding-left: 5px;
+    transform: translate(-50%, 0);
+  }
+
+  .scale-line-bg {
+    &:before {
+      position: absolute;
+      left: 0;
+      right: 0;
+      width: 100%;
+      height: 9px;
+      content: " ";
+      border-width: medium 2px 2px;
+      border-style: none solid solid;
+      border-color: #ffffff;
+    }
+    &:after {
+      width: 100%;
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 11px;
+      height: 9px;
+      content: " ";
+      border-width: medium 2px 2px;
+      border-style: none solid none;
+      border-color: #ffffff;
+    }
+  }
+}
+
+.m-scale-line-control {
+  position: absolute;
+  bottom: .5em;
+  left: .5em;
+  border-radius: 4px;
+  padding: 2px;
+  transition: .3s;
+}

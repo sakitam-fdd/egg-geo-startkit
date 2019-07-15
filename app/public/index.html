@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maptalks/dist/maptalks.css">
+  <style>
+    html, body, #map {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+  </style>
+</head>
+<body>
+<div id="map"></div>
+<script src="https://cdn.jsdelivr.net/npm/maptalks/dist/maptalks.min.js"></script>
+<script>
+  const map = new maptalks.Map('map', {
+    center: [120.2, 30.2],
+    zoom: 5,
+    pitch: 0,
+    bearing: 0,
+    minZoom: 0,
+    maxZoom: 24,
+    baseLayer: new maptalks.TileLayer('base', {
+      urlTemplate: 'https://map.geoq.cn/arcgis/rest/services/ChinaOnlineStreetPurplishBlue/MapServer/tile/{z}/{y}/{x}',
+      // urlTemplate: 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png',
+      // subdomains: ['a','b','c','d'],
+    })
+  });
+
+  function getColor(index) {
+    const colors = [];
+    const value = {
+      0: [0, 0, 0, 0],
+      36: [246, 160, 1, 255],
+      54: [236, 236, 0, 255],
+      72: [0, 216, 0, 255],
+      90: [0, 144, 0, 255],
+      108: [0, 255, 255, 255],
+      126: [0, 192, 231, 255],
+      144: [0, 144, 255, 255],
+      162: [0, 0, 255, 255],
+      180: [0, 0, 214, 255],
+      198: [0, 0, 192, 255],
+      216: [240, 0, 255, 255],
+      234: [180, 0, 150, 255],
+      252: [240, 144, 173, 255],
+    };
+    Object.keys(value).forEach((key, index) => {
+      colors.push(`rgba(${value[key][2]}, ${value[key][1]}, ${value[key][0]}, ${value[key][3] / 255})`)
+    });
+    // colors.push('rgba(20, 160, 240, 0)'); // 0
+    // colors.push('rgba(20, 190, 240, 0.34 )'); // 5
+    // colors.push('rgba(20, 220, 240, 0.34 )'); // 10
+    // colors.push('rgba(20, 250, 240, 0.34)'); // 15
+    // colors.push('rgba(20, 250, 160, 0.386)'); // 20
+    // colors.push('rgba(135, 250, 80, 0.471)'); // 25
+    // colors.push('rgba(236, 209, 84, 0.514)'); // 30
+    // colors.push('rgba(250, 250, 0,  0.557)'); // 35
+    // colors.push('rgba(250, 180, 0,  0.60)'); // 40
+    // colors.push('rgba(250, 110, 0, 0.60)'); // 45
+    // colors.push('rgba(250, 40, 0, 0.60)'); // 50
+    // colors.push('rgba(180, 40, 40, 0.60)'); // 55
+    // colors.push('rgba(110, 40, 80, 0.60)'); // 60
+    // colors.push('rgba(80, 40, 110, 0.60)'); // 65
+    // colors.push('rgba(50, 40, 140, 0.60)'); // 70
+    // colors.push('rgba(20, 40, 170, 0.60)'); //
+    return colors[index];
+  }
+
+  const values = [0, 36, 54, 72, 90, 108, 126, 144, 162, 180, 198, 216, 234, 252];
+
+  fetch('http://127.0.0.1:7001/image/readerSharp')
+    .then(res => res.json())
+    .then(res => {
+      console.log(res);
+      const data = maptalks.GeoJSON.toGeometry(res);
+      const layer = new maptalks.VectorLayer('2', data, {
+        enableSimplify: false,
+        style: [
+          ...values.map((val, index) => ({
+            'filter': ['==', 'value', val],
+            'symbol': {
+              'lineColor' : '#34495e',
+              'lineWidth' : 0,
+              'polygonFill' : getColor(index),
+              'polygonOpacity' : 1
+            }
+          }))
+        ]
+      });
+
+      const image = new maptalks.ImageLayer('1', [
+        {
+          url: './rardar/201907021018_0000_color.png',
+          extent: [66.68402763165123, 12.77002268658371, 143.5424729859214, 56.38334307775602],
+          opacity: 0.75
+        }
+      ], {
+        renderer: 'gl',
+        crossOrigin: '*',
+        spatialReference: {
+          projection: 'EPSG:3857',
+        },
+      });
+
+      // map.addLayer(image);
+      map.addLayer(layer);
+    });
+
+  console.log(map);
+</script>
+</body>
+</html>

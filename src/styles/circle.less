@@ -1,0 +1,130 @@
+/* 设置空气质量在地图上显示的图标的样式 */
+/* 点的基本样式 */
+
+/* 空气优 */
+.aqi_BackgroudClor_1{
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin: -15px 0 0 -15px;
+  width: 30px;
+  height: 30px;
+  border-radius: 15px;
+  background-color: rgba(0,128,0,0.8);
+}
+/* 空气良好 */
+.aqi_BackgroudClor_2{
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin: -15px 0 0 -15px;
+  width: 30px;
+  height: 30px;
+  border-radius: 15px;
+  background-color: rgba(255,255,0,0.8);
+}
+/* 轻度污染 */
+.circle3_1,
+.circle3_2,
+.circle3_3,
+.aqi_BackgroudClor_3{
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin: -15px 0 0 -15px;
+  width: 30px;
+  height: 30px;
+  border-radius: 15px;
+  background-color: rgba(255, 165, 0, 0.8);
+}
+/* 中度污染 */
+.circle4_1,
+.circle4_2,
+.circle4_3,
+.aqi_BackgroudClor_4{
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin: -15px 0 0 -15px;
+  width: 30px;
+  height: 30px;
+  border-radius: 15px;
+  background-color: rgba(255, 0, 0, 0.8);
+}
+/* 严重污染 */
+.circle5_1,
+.circle5_2,
+.circle5_3,
+.aqi_BackgroudClor_5{
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin: -15px 0 0 -15px;
+  width: 30px;
+  height: 30px;
+  border-radius: 15px;
+  background-color: rgba(128, 0, 128, 0.8);
+}
+/* 重度污染 */
+.circle6_1,
+.circle6_2,
+.circle6_3,
+.aqi_BackgroudClor_6{
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin: -15px 0 0 -15px;
+  width: 30px;
+  height: 30px;
+  border-radius: 15px;
+  background-color: rgba(139, 0, 0, 0.8);;
+}
+
+
+.circle3_1,
+.circle4_1,
+.circle5_1,
+.circle6_1 {
+  -webkit-animation: circle 3s linear infinite;
+  animation: circle 3s linear infinite;
+}
+
+.circle3_2,
+.circle4_2,
+.circle5_2,
+.circle6_2 {
+  -webkit-animation: circle 3s linear 0.8s infinite;
+  animation: circle 3s linear 0.8s infinite;
+}
+
+.circle3_3,
+.circle4_3,
+.circle5_3,
+.circle6_3 {
+  -webkit-animation: circle 3s linear 1.6s infinite;
+  /* Safari and Chrome */
+  animation: circle 3s linear 1.6s infinite;
+}
+
+@-webkit-keyframes circle {
+  /* Safari and Chrome */
+  from {
+    opacity: 1;
+    -webkit-transform: scale(0);
+  }
+  to {
+    opacity: 0;
+    -webkit-transform: scale(4);
+  }
+}
+.center {
+  margin: -20px 0 0 -20px;
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  text-align: center;
+  line-height: 40px;
+  color: rgb(0, 0, 0);
+  font-size: 20px;
+  font-family: '';
+}
